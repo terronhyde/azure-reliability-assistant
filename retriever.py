@@ -27,6 +27,6 @@ def retrieve_answer(query: str) -> Tuple[str, List[str]]:
         max_tokens=256,
         temperature=0.2
     )
-    answer = completion.choices[0].message.content.strip()
+    answer = completion.choices[0].message.content.strip() # type: ignore
     sources = list({c["file"] for c in top_chunks})
     return answer, sources
