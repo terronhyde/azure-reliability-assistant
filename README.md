@@ -1,58 +1,58 @@
-# azure-reliability-assistant
+# Azure Reliability Assistant
 
-The Azure Reliability Assistant (ARA) is a Copilot-style internal web application for the Azure Change SRE team. It provides natural language insights from unstructured datasources, using local document parsing and retrieval-augmented generation (RAG).
+This project is structured as a monorepo with a FastAPI backend and a React TypeScript frontend.
 
-## Features
+## Structure
 
-- **POST /ask** — Accepts a user query, retrieves relevant chunks from indexed documents using FAISS, and returns a GPT-generated answer with sources.
-- **POST /index** — Ingests and indexes all `.pptx` and `.docx` files from local folders (`/data/qdd/`, `/data/qcp/`, `/data/plr/`, `/data/opsex/`).
-- **GET /sources** — Returns a list of currently indexed files and their last modified times.
-- **GET /auth** — Returns a mock user identity (authentication is stubbed).
+```
+azure-reliability-assistant/
+├── backend/
+│   ├── main.py
+│   ├── indexer.py
+│   ├── retriever.py
+│   ├── models.py
+│   ├── mock_auth.py
+│   ├── requirements.txt
+│   └── data/
+│       ├── qdd/
+│       ├── qcp/
+│       ├── plr/
+│       └── opsex/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   └── ...
+├── .gitignore
+├── README.md
+└── LICENSE
+```
 
-## How it Works
+## Backend
+- Python FastAPI app for document indexing, retrieval, and OpenAI-powered Q&A.
+- All backend code and data live in the `backend/` folder.
 
-- **Document Parsing:** Uses `python-docx` and `python-pptx` to extract text from `.docx` and `.pptx` files.
-- **Chunking:** Documents are split into manageable text chunks for embedding.
-- **Embeddings & Vector Store:** Chunks are embedded using OpenAI's `text-embedding-ada-002` model and stored in a FAISS vector index for fast similarity search.
-- **Retrieval & Generation:** On a user query, the top relevant chunks are retrieved and passed as context to OpenAI's GPT model to generate an answer.
+## Frontend
+- React app scaffolded with TypeScript template in the `frontend/` folder.
 
-## Directory Structure
+## Setup
 
-- `/data/qdd/`      (contains `.pptx` files)
-- `/data/qcp/`
-- `/data/plr/`      (contains `.docx` files)
-- `/data/opsex/`
+### Backend
+```sh
+cd backend
+python -m venv .venv
+.venv\Scripts\activate  # On Windows
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
-## Dependencies
-
-- fastapi
-- uvicorn
-- openai
-- faiss-cpu
-- python-docx
-- python-pptx
-- pydantic
-- langchain (optional, for chaining)
-
-## Running Locally
-
-1. Install dependencies:
-   ```sh
-   python -m pip install -r requirements.txt
-   ```
-2. Start the FastAPI server:
-   ```sh
-   python -m uvicorn main:app --reload
-   ```
-3. Use the `/index` endpoint to index your documents.
-4. Use the `/ask` endpoint to query the assistant.
-5. Explore the API at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-## Notes
-- Requires an OpenAI API key set in your environment (e.g., `OPENAI_API_KEY`).
-- This is an MVP and does not include production authentication or security.
-- All document parsing and vector storage is local.
+### Frontend
+```sh
+cd frontend
+npm install
+npm start
+```
 
 ---
 
-For more details, see the code in `main.py`, `indexer.py`, and `retriever.py`.
+For more details, see the backend and frontend README files (if present).

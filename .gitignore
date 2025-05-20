@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# VSCode settings
+.vscode/
+
+# Environment variables
+.env
+.env.*
+
+# Node modules
+frontend/node_modules/
+
+# Build output
+frontend/build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# FAISS index
+backend/vector.index
